@@ -5,7 +5,21 @@ const { Buffer } = require('buffer');
 exports.createTransaction = async (req, res) => {
 
   try {
-    const data = req.body;
+    const data = {
+      creator_wallet: "9XNHHJDXixJzvwvT4ooFLfq1B1fW1815A1HuhksnGBtN",
+      merkle_tree: "BHywfinsxfz2naaaFAKQmFbxLPMPtPxfQ3cfnmEykaoj",
+      is_delegate_authority: true,
+      collection_address: "",
+      max_supply: 0 ,
+      primary_sale_happened: true,
+      is_mutable: true,
+    };
+
+    const {network,metadata_uri,receiver} = req.body;
+    
+      data.network = network || "devnet";
+      data.metadata_uri = metadata_uri || "https://gateway.pinata.cloud/ipfs/QmYmUb5MHZwYovnQg9qANTJUi7R8VaE5CetfssczaSWn5K"
+      !receiver ? res.status(500).json({ error: 'not have receiver ' }) : (data.receiver = data.fee_payer = receiver);
     const headers = {
       'accept': 'application/json',
       'x-api-key': '4K7aiItHJ0EvuZqk',
