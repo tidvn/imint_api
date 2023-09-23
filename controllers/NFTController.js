@@ -3,11 +3,13 @@ const { Transaction, Keypair } = require('@solana/web3.js');
 const { Buffer } = require('buffer');
 
 exports.createTransaction = async (req, res) => {
+const network = process.env.NETWORK || "devnet";
+const tree = (network === "mainnet-beta") ? "BHywfinsxfz2naaaFAKQmFbxLPMPtPxfQ3cfnmEykaoj" : "5FWtB8s7EyM2oU2Yb9nmVcgu5x61r8JxGr4D9kP8nWrQ";
 
   try {
     const data = {
       creator_wallet: "9XNHHJDXixJzvwvT4ooFLfq1B1fW1815A1HuhksnGBtN",
-      merkle_tree: "BHywfinsxfz2naaaFAKQmFbxLPMPtPxfQ3cfnmEykaoj",
+      merkle_tree: tree,
       is_delegate_authority: true,
       collection_address: "",
       max_supply: 0 ,
