@@ -3,13 +3,10 @@ const { Transaction, Keypair } = require('@solana/web3.js');
 const { Buffer } = require('buffer');
 
 exports.createTransaction = async (req, res) => {
-const network = process.env.NETWORK || "devnet";
-const tree = (network === "mainnet-beta") ? "BHywfinsxfz2naaaFAKQmFbxLPMPtPxfQ3cfnmEykaoj" : "5FWtB8s7EyM2oU2Yb9nmVcgu5x61r8JxGr4D9kP8nWrQ";
 
   try {
     const data = {
       creator_wallet: "9XNHHJDXixJzvwvT4ooFLfq1B1fW1815A1HuhksnGBtN",
-      merkle_tree: tree,
       is_delegate_authority: true,
       collection_address: "",
       max_supply: 0 ,
@@ -18,10 +15,14 @@ const tree = (network === "mainnet-beta") ? "BHywfinsxfz2naaaFAKQmFbxLPMPtPxfQ3c
     };
 
     const {network,metadata_uri,receiver} = req.body;
-    
-      data.network = process.env.NETWORK || "devnet";
+      
+      data.network = network || "devnet";
+      data.merkle_tree = (network === "mainnet-beta") ? "BHywfinsxfz2naaaFAKQmFbxLPMPtPxfQ3cfnmEykaoj" : "5FWtB8s7EyM2oU2Yb9nmVcgu5x61r8JxGr4D9kP8nWrQ";
       data.metadata_uri = metadata_uri || "https://gateway.pinata.cloud/ipfs/QmYmUb5MHZwYovnQg9qANTJUi7R8VaE5CetfssczaSWn5K"
       !receiver ? res.status(500).json({ error: 'not have receiver ' }) : (data.receiver = data.fee_payer = receiver);
+  
+
+    
     const headers = {
       'accept': 'application/json',
       'x-api-key': '4K7aiItHJ0EvuZqk',
