@@ -19,7 +19,7 @@ const tree = (network === "mainnet-beta") ? "BHywfinsxfz2naaaFAKQmFbxLPMPtPxfQ3c
 
     const {network,metadata_uri,receiver} = req.body;
     
-      data.network = network || "devnet";
+      data.network = process.env.NETWORK || "devnet";
       data.metadata_uri = metadata_uri || "https://gateway.pinata.cloud/ipfs/QmYmUb5MHZwYovnQg9qANTJUi7R8VaE5CetfssczaSWn5K"
       !receiver ? res.status(500).json({ error: 'not have receiver ' }) : (data.receiver = data.fee_payer = receiver);
     const headers = {
